@@ -19,3 +19,10 @@
 - NetflixGPT
     - Search Bar
     - Movie Suggestions
+
+
+- Create React App
+- Configured TailwindCSS 
+- Header
+- Login Form
+- Sign up Form
