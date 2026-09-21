@@ -7,13 +7,15 @@ import {
     updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { USER_AVATAR } from "../utils/constants";
 
 const Login = () => {
 
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [errorMessage, setErrorMessage] = useState(null);
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const name = useRef(null);
     const email = useRef(null);
@@ -29,21 +31,29 @@ const Login = () => {
             createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
             .then((userCredential) => {
                 const user = userCredential.user;
-                updateProfile(auth.currentUser, {
+                updateProfile(user, {
                     displayName: name.current.value, 
-                    photoURL: "public/profile.png"
+                    photoURL: USER_AVATAR
                     }).then(() => {
-                        navigate("/browse");
+                        const {uid, email, displayName, photoURL} = auth.currentUser;
+                        dispatch(
+                            addUser({
+                                uid: uid,
+                                email: email,
+                                displayName: displayName,
+                                photoURL: photoURL,
+                            })
+                        );
                     }).catch((error) => {
                         setErrorMessage(error.message);
                     });
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                setErrorMessage(errorCode + " - " + errorMessage);
-            });
-        } else {
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    setErrorMessage(errorCode + " - " + errorMessage);
+                });
+            } else {
             //Sign In Logic
             signInWithEmailAndPassword(
                 auth, 
@@ -53,8 +63,6 @@ const Login = () => {
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                console.log(user);
-                navigate("/browse");
             })
             .catch((error) => {
                 const errorCode = error.code;
