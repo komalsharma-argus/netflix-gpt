@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebase";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
-import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
+import { SUPPORTED_LANGUAGES } from "../utils/constants";
 import {toggleGptSearchView} from "../utils/gptSlice";
 import {changeLanguage} from "../utils/configSlice";
 
@@ -58,7 +58,7 @@ const Header = () => {
     <div className="absolute w-screen px-4 md:px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col sm:flex-row justify-between items-center">
         <img 
             className="w-32 md:w-44 mx-auto sm:mx-0"
-            src={LOGO}
+            src="Netflix_LOGO.png"
             alt="logo"
         />
         {user && (
