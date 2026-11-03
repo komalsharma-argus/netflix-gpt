@@ -1,11 +1,9 @@
 import { useSelector } from "react-redux";
-import gemini from "../utils/openai";
 import { useRef } from "react";
 import { useDispatch} from "react-redux";
 import lang from "../utils/languageConstants";
 import { API_OPTIONS } from "../utils/constants";
 import { addGptMovieResult } from "../utils/gptSlice";
-import { GEMINI_MODEL } from "../utils/constants";
 import { generateWithFallback } from "../utils/geminiHelper";
 
 const GptSearchBar = () => {
